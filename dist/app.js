@@ -151,7 +151,7 @@ playlistPanels.forEach(panel=>{
   $('[data-playlist-switch]',panel).addEventListener('change',event=>{
     const next=playlistPanels.find(p=>p.id===event.target.value);
     if(!next||next===panel)return;
-    const opener=playlistTriggers.find(t=>t.classList.contains('collection-play')&&t.getAttribute('aria-controls')===next.id);
+    const opener=playlistTriggers.find(t=>t.classList.contains('collection-play')&&t.getAttribute('aria-controls')===next.id)||playlistTriggers.find(t=>t.getAttribute('aria-controls')===next.id);
     openPlaylist(next,opener,true);
   });
   $('.playlist-close',panel).addEventListener('click',()=>{

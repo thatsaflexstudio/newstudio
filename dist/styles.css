@@ -130,3 +130,8 @@
 .playlist-controls .playlist-close{min-height:46px}
 @media(max-width:1050px){.playlist-heading{align-items:flex-start;flex-direction:column;gap:18px}}
 @media(max-width:560px){.cover-action svg{width:16px;height:16px}.playlist-controls{width:100%;gap:8px}.playlist-switch{flex:1}.playlist-switch select{width:100%;font-size:16px;padding-left:8px;padding-right:4px}.playlist-controls .playlist-close{font-size:8px;letter-spacing:.04em;padding:8px;gap:8px}}
+
+/* The native catalogue widget keeps its own header and search visible. */
+.catalogue-player{height:790px;background:#101010}
+.playlist-player.catalogue-player iframe{top:0;height:100%;background:#101010}
+@media(max-width:640px){.catalogue-player{height:clamp(550px,85svh,790px)}}
