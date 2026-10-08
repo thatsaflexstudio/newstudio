@@ -31,7 +31,7 @@ if(whatsappReady){
     const kind = a.dataset.whatsapp;
     a.href = contact.url(whatsapp, contact.messages[kind] || contact.messages.general);
     a.target = '_blank'; a.rel = 'noopener noreferrer';
-    a.setAttribute('aria-label', kind === 'general' ? 'Contact Fex on WhatsApp' : kind === 'beats' || kind === 'custom' ? 'Ask Fex about production on WhatsApp' : 'Book via WhatsApp');
+    a.setAttribute('aria-label', kind === 'general' ? 'Contact Fex Fenix on WhatsApp' : kind === 'beats' || kind === 'custom' ? 'Ask Fex Fenix about production on WhatsApp' : 'Book via WhatsApp');
   });
   $('.contact-availability').textContent='Let’s talk about your sound, your session and availability. Message us directly on WhatsApp.';
   $('#inquiry-help').textContent='Prefer to send the details first? This form is optional. Only name and service are required. Review your message in WhatsApp, then tap Send.';

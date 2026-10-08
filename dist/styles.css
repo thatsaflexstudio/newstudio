@@ -106,3 +106,7 @@
 .productions-all{margin-top:24px}
 @media(max-width:640px){.productions-teaser .production-card:nth-child(n+2){display:none}.productions-teaser .productions-heading>p{display:none}.productions-teaser .productions-heading{margin-bottom:20px}.productions-all{margin-top:19px}}
 @media(prefers-reduced-motion:reduce){.production-thumb img{transition:none}.production-preview:hover .production-thumb img{transform:none}}
+
+/* Studio caption beside the image; full-width photography on phones. */
+.studio-frame.has-photo .studio-tagline{margin:8px 0 0;max-width:none;white-space:nowrap;font-size:clamp(9px,2.7vw,12px);line-height:1.5}
+@media(max-width:640px){.studio-frame.has-photo{width:calc(100% + var(--pad) + var(--pad));margin-left:calc(0px - var(--pad));margin-right:calc(0px - var(--pad));border-left:0;border-right:0}.studio-frame.has-photo .frame-bottom{padding-left:var(--pad);padding-right:var(--pad)}.studio-frame-heading{min-width:0}}
