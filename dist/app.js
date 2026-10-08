@@ -120,7 +120,7 @@ if(media.studioImages?.length){
 }
 (media.instagramPosts||[]).forEach(post=>{if(!safeUrl(post.url)||!safeUrl(post.image))return;const a=document.createElement('a');a.href=safeUrl(post.url);a.target='_blank';a.rel='noopener noreferrer';a.append(mediaImage(post.image,post.alt||'View this studio post on Instagram',''));$('#instagram-posts').append(a);});
 if(config.featuredBeats?.length){
-  const grid=$('#beat-grid');grid.replaceChildren();$('.beats-intro>span').textContent='FEATURED BEATS / ORIGINAL PRODUCTION';
+  const grid=$('#beat-grid');grid.replaceChildren();
   config.featuredBeats.slice(0,4).forEach(beat=>{const article=document.createElement('article');article.className='real-beat';if(beat.artwork)article.append(mediaImage(beat.artwork,beat.name+' artwork','real-beat-art'));const heading=document.createElement('h3');heading.textContent=beat.name;article.append(heading);const mood=document.createElement('p');mood.textContent=beat.mood||'';article.append(mood);const description=document.createElement('p');description.textContent=beat.description||'';article.append(description);if(beat.preview&&safeUrl(beat.preview)){const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.src=safeUrl(beat.preview);audio.setAttribute('aria-label','Preview '+beat.name);article.append(audio);}if(beat.url&&safeUrl(beat.url)){const link=document.createElement('a');link.className='inline-link';link.href=safeUrl(beat.url);link.target='_blank';link.rel='noopener noreferrer';link.textContent='Listen & license ↗';article.append(link);}grid.append(article);});
 }
 
