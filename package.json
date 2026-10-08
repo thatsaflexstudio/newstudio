@@ -1,0 +1,10 @@
+{
+  "name": "thats-a-flex-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "That’s A Flex Studio website",
+  "scripts": {
+    "dev": "node scripts/server.mjs",
+    "check": "node scripts/validate.mjs && node scripts/contact-check.mjs"
+  }
+}

@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {fileURLToPath} from 'node:url';
+const base=path.dirname(fileURLToPath(import.meta.url)),root=path.join(base,'..','dist');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);assert.equal(ids.length,new Set(ids).size,'Duplicate IDs');
+for(const m of html.matchAll(/href="#([^"]+)"/g))assert(ids.includes(m[1]),'Broken anchor: '+m[1]);
+for(const m of html.matchAll(/(?:src|href)="((?:assets\/)[^"]+)"/g))assert(fs.existsSync(path.join(root,m[1])),'Missing asset '+m[1]);
+for(const m of html.matchAll(/<img\b[^>]*>/g))assert(/alt="[^"]*"/.test(m[0]),'Missing image alt');
+new vm.Script(fs.readFileSync(path.join(root,'app.js'),'utf8'));
+const context={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'config.js'),'utf8'),context);assert(Array.isArray(context.window.FLEX_CONFIG.featuredBeats),'featuredBeats must be an array');
+const schema=html.match(/<script type="application\/ld\+json">(.*?)<\/script>/s);JSON.parse(schema[1]);
+const bytes=fs.readdirSync(path.join(root,'assets')).reduce((n,f)=>n+fs.statSync(path.join(root,'assets',f)).size,0);
+console.log(JSON.stringify({status:'passed',anchors:ids.length,assetBytes:bytes,checks:['unique IDs','internal anchors','local images','image alternatives','JavaScript syntax','structured data','beat configuration']}));
