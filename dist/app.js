@@ -116,7 +116,6 @@ if(media.studioImages?.length){
     const previous=$('.actual-studio-image',frame);
     if(previous)previous.replaceWith(photo);else frame.prepend(photo);
     frame.classList.add('has-photo');
-    $('#studio-caption').textContent=item.caption||'That’s A Flex Studio / Bávaro, Punta Cana';
   }
 }
 (media.instagramPosts||[]).forEach(post=>{if(!safeUrl(post.url)||!safeUrl(post.image))return;const a=document.createElement('a');a.href=safeUrl(post.url);a.target='_blank';a.rel='noopener noreferrer';a.append(mediaImage(post.image,post.alt||'View this studio post on Instagram',''));$('#instagram-posts').append(a);});

@@ -19,7 +19,6 @@ window.FLEX_CONFIG = {
       sizes: '(max-width: 560px) calc(100vw - 44px), (max-width: 1600px) 90vw, 1424px',
       width: 1672, height: 941,
       alt: 'Red-lit recording studio with a production desk, monitor speakers and a vocal booth, with That’s A Flex and The Honorable Few wall logos.',
-      caption: 'That’s A Flex Studio / Bávaro, Punta Cana'
     }], // Add future approved studio photos here.
     instagramPosts: [] // [{image, alt, url}] — approved posts only.
   },
