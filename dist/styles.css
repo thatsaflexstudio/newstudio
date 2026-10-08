@@ -110,3 +110,23 @@
 /* Studio caption beside the image; full-width photography on phones. */
 .studio-frame.has-photo .studio-tagline{margin:8px 0 0;max-width:none;white-space:nowrap;font-size:clamp(9px,2.7vw,12px);line-height:1.5}
 @media(max-width:640px){.studio-frame.has-photo{width:calc(100% + var(--pad) + var(--pad));margin-left:calc(0px - var(--pad));margin-right:calc(0px - var(--pad));border-left:0;border-right:0}.studio-frame.has-photo .frame-bottom{padding-left:var(--pad);padding-right:var(--pad)}.studio-frame-heading{min-width:0}}
+
+.playlist-heading h3[tabindex]:focus{outline:none}
+
+
+/* Supplied square playlist artwork. */
+.playlist-cover{display:block;aspect-ratio:1;background:#141010}
+.playlist-cover img{width:100%;height:100%;object-fit:contain}
+.cover-action{line-height:1;position:absolute;right:12px;bottom:12px;width:34px;height:34px;border:1px solid #ffffff55;border-radius:50%;display:grid;place-items:center;background:#0a0a0acc;color:#fff;font-size:12px;transition:background .25s}
+.playlist-cover:hover .cover-action,.playlist-cover:focus-visible .cover-action{background:var(--deep-red)}
+@media(max-width:560px){.playlist-cover{aspect-ratio:1}.cover-action{right:8px;bottom:8px;width:28px;height:28px;font-size:10px}.collection-caption p{font-size:11px;line-height:1.55}}
+
+/* Consistent vector play icons and in-player collection navigation. */
+.cover-action svg{display:block;width:18px;height:18px;flex:none}
+.playlist-controls{display:flex;align-items:flex-end;gap:12px;flex-shrink:0;max-width:100%}
+.playlist-switch{display:flex;flex-direction:column;gap:6px;min-width:0}
+.playlist-switch>span{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#c6b8bd}
+.playlist-switch select{width:210px;max-width:100%;height:46px;min-height:46px;padding:8px 28px 8px 12px;border:1px solid #655159;border-radius:0;background:#171014;color:#eadde0;color-scheme:dark;font-family:var(--body);font-size:12px;cursor:pointer}
+.playlist-controls .playlist-close{min-height:46px}
+@media(max-width:1050px){.playlist-heading{align-items:flex-start;flex-direction:column;gap:18px}}
+@media(max-width:560px){.cover-action svg{width:16px;height:16px}.playlist-controls{width:100%;gap:8px}.playlist-switch{flex:1}.playlist-switch select{width:100%;font-size:16px;padding-left:8px;padding-right:4px}.playlist-controls .playlist-close{font-size:8px;letter-spacing:.04em;padding:8px;gap:8px}}

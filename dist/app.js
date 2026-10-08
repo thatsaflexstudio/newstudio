@@ -124,25 +124,38 @@ if(config.featuredBeats?.length){
   config.featuredBeats.slice(0,4).forEach(beat=>{const article=document.createElement('article');article.className='real-beat';if(beat.artwork)article.append(mediaImage(beat.artwork,beat.name+' artwork','real-beat-art'));const heading=document.createElement('h3');heading.textContent=beat.name;article.append(heading);const mood=document.createElement('p');mood.textContent=beat.mood||'';article.append(mood);const description=document.createElement('p');description.textContent=beat.description||'';article.append(description);if(beat.preview&&safeUrl(beat.preview)){const audio=document.createElement('audio');audio.controls=true;audio.preload='none';audio.src=safeUrl(beat.preview);audio.setAttribute('aria-label','Preview '+beat.name);article.append(audio);}if(beat.url&&safeUrl(beat.url)){const link=document.createElement('a');link.className='inline-link';link.href=safeUrl(beat.url);link.target='_blank';link.rel='noopener noreferrer';link.textContent='Listen & license ↗';article.append(link);}grid.append(article);});
 }
 
-// Load the third-party player only after a visitor opens the collection.
-const playlistPanel = $('#noches-de-detroit');
-const playlistFrame = $('iframe', playlistPanel);
-const playlistTriggers = $$('[data-playlist-open]');
-let playlistOpener = playlistTriggers[0];
-playlistTriggers.forEach(trigger => trigger.addEventListener('click', event => {
-  event.preventDefault();
-  playlistOpener = trigger;
-  playlistPanel.hidden = false;
-  playlistTriggers.forEach(link => link.setAttribute('aria-expanded', 'true'));
-  if (!playlistFrame.hasAttribute('src')) playlistFrame.src = playlistFrame.dataset.src;
-  $('#noches-title').focus({preventScroll:true});
-  playlistPanel.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+// Collections load on demand. Only one playlist is active at a time.
+const playlistPanels=$$('.playlist-panel');
+const playlistTriggers=$$('[data-playlist-open]');
+let playlistOpener;
+function closePlaylist(panel){
+  $('iframe',panel).removeAttribute('src');panel.hidden=true;
+  playlistTriggers.filter(t=>t.getAttribute('aria-controls')===panel.id).forEach(t=>t.setAttribute('aria-expanded','false'));
+}
+function openPlaylist(panel,opener,fromSwitcher=false){
+  playlistOpener=opener;
+  playlistPanels.filter(p=>p!==panel&&!p.hidden).forEach(closePlaylist);
+  panel.hidden=false;
+  playlistTriggers.filter(t=>t.getAttribute('aria-controls')===panel.id).forEach(t=>t.setAttribute('aria-expanded','true'));
+  const selector=$('[data-playlist-switch]',panel);selector.value=panel.id;
+  const frame=$('iframe',panel);if(!frame.hasAttribute('src'))frame.src=frame.dataset.src;
+  (fromSwitcher?selector:$('h3',panel)).focus({preventScroll:true});
+  panel.scrollIntoView({behavior:fromSwitcher||matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+}
+playlistTriggers.forEach(trigger=>trigger.addEventListener('click',event=>{
+  const panel=playlistPanels.find(p=>p.id===trigger.getAttribute('aria-controls'));
+  if(!panel)return;
+  event.preventDefault();openPlaylist(panel,trigger);
 }));
-$('.playlist-close', playlistPanel).addEventListener('click', () => {
-  // Unload the frame so closing the playlist also stops any audio.
-  playlistFrame.removeAttribute('src');
-  playlistPanel.hidden = true;
-  playlistTriggers.forEach(link => link.setAttribute('aria-expanded', 'false'));
-  playlistOpener.focus({preventScroll:true});
-  playlistOpener.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
+playlistPanels.forEach(panel=>{
+  $('[data-playlist-switch]',panel).addEventListener('change',event=>{
+    const next=playlistPanels.find(p=>p.id===event.target.value);
+    if(!next||next===panel)return;
+    const opener=playlistTriggers.find(t=>t.classList.contains('collection-play')&&t.getAttribute('aria-controls')===next.id);
+    openPlaylist(next,opener,true);
+  });
+  $('.playlist-close',panel).addEventListener('click',()=>{
+    closePlaylist(panel);
+    if(playlistOpener){playlistOpener.focus({preventScroll:true});playlistOpener.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});}
+  });
 });
