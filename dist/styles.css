@@ -54,7 +54,7 @@
 .collection-play:hover{box-shadow:0 0 0 1px #ae747e;transform:translateY(-3px)}
 .collection-play .cover-bottom{display:flex;justify-content:space-between;right:20px;color:#f0d8dd}
 .collection-caption>span{white-space:nowrap;font-size:7px}
-.collection-caption>.collection-live{color:#e0a2ad}
+.collection-caption>.collection-live{display:none}
 .playlist-panel{margin-top:36px;padding:28px;border:1px solid #493038;background:linear-gradient(145deg,#1b1116,#101010 65%);scroll-margin-top:100px}
 .playlist-heading{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-bottom:25px}
 .playlist-heading h3{font-family:var(--display);font-size:clamp(30px,3.5vw,52px);line-height:1.05;letter-spacing:-.01em;margin:12px 0}
